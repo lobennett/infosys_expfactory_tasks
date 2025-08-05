@@ -43,8 +43,7 @@ var feedbackInstructText = `
   </p>
   <p class="center-block-text"> Press <i>enter</i> to begin.</p>
 `;
-// var numTrials = 14;
-var numTrials = 1;
+var numTrials = 14;
 var numDigits = 3;
 var minDigits = 1;
 var consecutiveErrors = 0;

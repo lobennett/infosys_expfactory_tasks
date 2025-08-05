@@ -1,0 +1,185 @@
+// Helper functions
+const getInstructFeedback = () =>
+  `<div class="centerbox"><p class="center-block-text">${feedbackInstructText}</p></div>`;
+
+// var instructTimeThresh = 5; // threshold for instructions, in seconds
+var instructTimeThresh = 0;
+var sumInstructTime = 0; // time spent on instructions, in seconds
+var feedbackInstructText = `
+  <p class="center-block-text">
+    Welcome! This experiment will take around 5 minutes.
+  </p>
+  <p class="center-block-text">
+    To avoid technical issues, please keep the experiment tab (on Chrome or Firefox) active and in fullscreen mode for the whole duration of each task.
+  </p>
+  <p class="center-block-text"> Press <i>enter</i> to begin.</p>
+`;
+
+var pageInstruct = [
+  `
+  <div class="centerbox">
+    <p class="center-block-text">
+      In this survey you will be responding to general questions that may or may not describe you. Please indicate the degree to which you disagree or agree with each statement. The survey begins on the next page.
+    </p>
+  </div>
+  `,
+];
+
+var testTrials = [];
+var likert_scale = [
+  'Disagree strongly',
+  'Disagree moderately',
+  'Disagree a little',
+  'Neither agree nor disagree',
+  'Agree a little',
+  'Agree moderately',
+  'Agree strongly',
+];
+var trial = {
+  type: jsPsychSurveyLikert,
+  preamble:
+    '<div style="text-align: center; margin-top: 100px;"><b>I see myself as...</b></div>',
+  questions: [
+    {
+      prompt: 'Extraverted, enthusiastic.',
+      labels: likert_scale,
+    },
+    {
+      prompt: 'Critical, quarrelsome.',
+      labels: likert_scale,
+    },
+    {
+      prompt: 'Dependable, self-disciplined.',
+      labels: likert_scale,
+    },
+    {
+      prompt: 'Anxious, easily upset.',
+      labels: likert_scale,
+    },
+    {
+      prompt: 'Open to new experiences, complex.',
+      labels: likert_scale,
+    },
+    {
+      prompt: 'Reserved, quiet.',
+      labels: likert_scale,
+    },
+    {
+      prompt: 'Sympathetic, warm.',
+      labels: likert_scale,
+    },
+    {
+      prompt: 'Disorganized, careless.',
+      labels: likert_scale,
+    },
+    {
+      prompt: 'Calm, emotionally stable.',
+      labels: likert_scale,
+    },
+    {
+      prompt: 'Conventional, uncreative.',
+      labels: likert_scale,
+    },
+  ],
+};
+testTrials.push(trial);
+
+// Show the one instruction page, allow clicking or timeout
+var instructionsBlock = {
+  type: jsPsychInstructions,
+  pages: pageInstruct,
+  allow_keys: false,
+  show_clickable_nav: true,
+  data: {
+    trial_id: 'instructions',
+    stimulus: pageInstruct,
+  },
+  on_load: function () {
+    setTimeout(() => {
+      jsPsych.finishTrial(); // auto-advance after 60 seconds
+    }, 60000);
+  },
+  on_finish: function (data) {
+    if (data.rt != null) {
+      sumInstructTime += data.rt;
+    } else {
+      sumInstructTime += 60000;
+    }
+  },
+};
+
+var feedbackInstructBlock = {
+  type: jsPsychHtmlKeyboardResponse,
+  choices: ['Enter'],
+  stimulus: getInstructFeedback,
+  data: {
+    trial_id: 'instruction_feedback',
+    trial_duration: 30000,
+  },
+  trial_duration: 30000,
+};
+
+var testNode = {
+  timeline: testTrials,
+  loop_function: function (data) {
+    return false;
+  },
+};
+
+// Node that loops if too fast
+var instructionNode = {
+  timeline: [feedbackInstructBlock, instructionsBlock],
+  loop_function: function (data) {
+    sumInstructTime = 0;
+    const trials = data.filter({ trial_id: 'instructions' }).trials;
+    for (let i = 0; i < trials.length; i++) {
+      sumInstructTime += trials[i].rt != null ? trials[i].rt : 60000;
+    }
+
+    if (sumInstructTime <= instructTimeThresh * 1000) {
+      feedbackInstructText = `
+        <p class=block-text>Read through instructions too quickly. Please take your time and make sure you understand the instructions.</p>
+        <p class=block-text>Press <i>enter</i> to continue.</p>`;
+      return true; // repeat
+    } else {
+      feedbackInstructText = `
+        <p class=block-text>Done with instructions. Press <i>enter</i> to continue.</p>`;
+      return false; // continue
+    }
+  },
+};
+
+var fullscreen = {
+  type: jsPsychFullscreen,
+  fullscreen_mode: true,
+};
+
+var exitFullscreen = {
+  type: jsPsychFullscreen,
+  fullscreen_mode: false,
+};
+
+var endBlock = {
+  type: jsPsychHtmlKeyboardResponse,
+  data: {
+    trial_id: 'end',
+    exp_id: 'ten_item_personality',
+    trial_duration: 10000,
+  },
+  trial_duration: 10000,
+  stimulus: `
+  <div class="centerbox" style="height: 50vh;">
+    <p class="center-block-text">Congratulations for completing the task!</p>
+    <p class="center-block-text">Press <i>enter</i> to continue.</p>
+  </div>`,
+  choices: ['Enter'],
+};
+
+ten_item_personality_experiment = [];
+var ten_item_personality_init = () => {
+  ten_item_personality_experiment.push(fullscreen);
+  ten_item_personality_experiment.push(instructionNode);
+  ten_item_personality_experiment.push(testNode);
+  ten_item_personality_experiment.push(endBlock);
+  ten_item_personality_experiment.push(exitFullscreen);
+};

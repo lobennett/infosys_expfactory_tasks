@@ -2,8 +2,8 @@
 # deploy experiments locally
 .venv/
 
-# Task static directories created with expfactory_deploy_local
-static/
+# Task static files created with expfactory_deploy_local
+static
 
 # Local vscode settings
 .vscode/

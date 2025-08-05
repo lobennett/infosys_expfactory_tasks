@@ -97,3 +97,9 @@ img.center {
 span.required {
   display: none !important;
 }
+
+/* Survey styling */
+.jspsych-survey-likert-opt-label {
+  color: white !important;
+  cursor: pointer !important;
+}

@@ -8,6 +8,8 @@ const getFeedback = () =>
 const getCurrentDigitCount = () =>
   `<div class="bigbox"><div class="picture_box"><p class="block-text">${numDigits} Digits</p></div></div>`;
 
+const getCurrentDigit = () => currentDigit;
+
 const pageInstruct = [
   `
   <div class="centerbox" >
@@ -41,11 +43,13 @@ var feedbackInstructText = `
   </p>
   <p class="center-block-text"> Press <i>enter</i> to begin.</p>
 `;
-var numTrials = 14;
+// var numTrials = 14;
+var numTrials = 1;
 var numDigits = 3;
 var minDigits = 1;
 var consecutiveErrors = 0;
 var currentDigit;
+var currentDigitCount = 0;
 
 var feedbackInstructBlock = {
   type: jsPsychHtmlKeyboardResponse,
@@ -97,18 +101,40 @@ var feedbackBlock = {
   response_ends_trial: true,
 };
 
-var reverseBlockStart = {
+var forwardTrial = {
   type: jsPsychHtmlKeyboardResponse,
+  stimulus: sampleDigitWithReplacement,
+  choices: ['NO_KEYS'],
+  stimulus_duration: 1000,
+  trial_duration: 1500,
   data: {
-    trial_id: 'reverse_block_start',
     exp_stage: 'test',
-    trial_duration: 60000,
+    stimulus_duration: 1000,
+    trial_duration: 1500,
+    direction: 'forward',
+    trial_id: `test_forward_digit_trial`,
   },
-  choices: ['Enter'],
-  stimulus:
-    '<div class = centerbox><p class = block-text>In these next trials, instead of reporting back the sequence you just saw, report the <strong>reverse</strong> of that sequence. So the last item should be first in your response, the second to last should be the second in your response, etc...</p><p class = block-text>Press <strong>enter</strong> to begin.</p></div>',
-  trial_duration: 60000,
-  response_ends_trial: true,
+  on_finish: function (data) {
+    data.current_digit = getCurrentDigit();
+  },
+};
+
+var reverseTrial = {
+  type: jsPsychHtmlKeyboardResponse,
+  stimulus: sampleDigitWithReplacement,
+  choices: ['NO_KEYS'],
+  stimulus_duration: 1000,
+  trial_duration: 1500,
+  data: {
+    exp_stage: 'test',
+    stimulus_duration: 1000,
+    trial_duration: 1500,
+    direction: 'reverse',
+    trial_id: `test_reverse_digit_trial`,
+  },
+  on_finish: function (data) {
+    data.current_digit = getCurrentDigit();
+  },
 };
 
 var forwardTrials = [];
@@ -120,33 +146,30 @@ for (let i = 0; i < numTrials; i++) {
     stimulus_duration: 1000,
     trial_duration: 1500,
     data: {
-      trial_id: `test_forward_start_trial_${i + 1}`,
+      trial_id: `test_forward_start_trial`,
       exp_stage: 'test',
       stimulus_duration: 1000,
       trial_duration: 1500,
       direction: 'forward',
     },
   };
+
   forwardTrials.push(trialStart);
 
-  for (let j = 0; j < numDigits; j++) {
-    var trial = {
-      type: jsPsychHtmlKeyboardResponse,
-      stimulus: sampleDigitWithReplacement(),
-      choices: ['NO_KEYS'],
-      stimulus_duration: 1000,
-      trial_duration: 1500,
-      data: {
-        trial_id: `test_forward_digit_trial_${i + 1}`,
-        exp_stage: 'test',
-        stimulus_duration: 1000,
-        trial_duration: 1500,
-        direction: 'forward',
-        current_digit: currentDigit,
-      },
-    };
-    forwardTrials.push(trial);
-  }
+  var loopNode = {
+    timeline: [forwardTrial],
+    loop_function: function (data) {
+      currentDigitCount++;
+      if (currentDigitCount < numDigits) {
+        return true;
+      } else {
+        currentDigitCount = 0;
+        return false;
+      }
+    },
+  };
+
+  forwardTrials.push(loopNode);
 
   var responsePrompt = {
     type: jsPsychSurveyHtmlForm,
@@ -169,12 +192,10 @@ for (let i = 0; i < numTrials; i++) {
              onkeydown="if(event.key==='Enter'){var btn=document.getElementById('jspsych-survey-html-form-next'); if(btn) btn.click();}">
     `,
     data: {
-      trial_id: `test_forward_response_trial_${i + 1}`,
+      trial_id: `test_forward_response_trial`,
       exp_stage: 'test',
       direction: 'forward',
     },
-    stimulus_duration: 5000,
-    trial_duration: 5000,
     on_load: function () {
       // Focus the input field after the trial loads
       setTimeout(function () {
@@ -184,13 +205,18 @@ for (let i = 0; i < numTrials; i++) {
         }
       }, 200);
 
-      // Auto-submit after 5 seconds
+      // Simulate pressing the Enter key after 5 seconds
       setTimeout(function () {
-        var submitButton = document.getElementById(
-          'jspsych-survey-html-form-next'
-        );
-        if (submitButton) {
-          submitButton.click();
+        var inputField = document.querySelector('input[name="digit_response"]');
+        if (inputField) {
+          var event = new KeyboardEvent('keydown', {
+            key: 'Enter',
+            code: 'Enter',
+            which: 13,
+            keyCode: 13,
+            bubbles: false,
+          });
+          inputField.dispatchEvent(event);
         }
       }, 5000);
     },
@@ -202,10 +228,14 @@ for (let i = 0; i < numTrials; i++) {
           : '';
 
       // Get previous trials for num digit responses
-      let lastTrials = jsPsych.data.get().filter({
-        trial_id: `test_forward_digit_trial_${i + 1}`,
-      }).trials;
-      let correctResponse = lastTrials.map((trial) => trial.current_digit);
+      const allData = jsPsych.data.get().trials;
+      const lastStartIndex = allData.findLastIndex(
+        (trial) => trial.trial_id === 'test_forward_start_trial'
+      );
+      const lastTrials = allData
+        .slice(lastStartIndex)
+        .filter((trial) => trial.trial_id === 'test_forward_digit_trial');
+      const correctResponse = lastTrials.map((trial) => trial.current_digit);
 
       // append to data object
       data.correct_response = correctResponse.join('');
@@ -221,15 +251,47 @@ for (let i = 0; i < numTrials; i++) {
           consecutiveErrors = 0;
         }
       }
-
-      console.log(numDigits);
-      console.log(consecutiveErrors);
-      console.log(minDigits);
-      console.log(data);
     },
   };
   forwardTrials.push(responsePrompt);
 }
+
+var reverseTestBlockStart = {
+  type: jsPsychHtmlKeyboardResponse,
+  data: {
+    trial_id: 'test_reverse_block_start',
+    exp_stage: 'test',
+    trial_duration: 10000,
+  },
+  trial_duration: 10000,
+  stimulus: `
+  <div class="centerbox" style="height: 50vh;">
+    <p class="center-block-text">In these next trials, instead of reporting back the sequence you just saw, report the <strong>reverse</strong> of that sequence. So the last item should be first in your response, the second to last should be the second in your response, etc...</p>
+    <p class="center-block-text">Press <i>enter</i> to continue.</p>
+  </div>`,
+  choices: 'NO_KEYS', // Disable jsPsych's built-in key handling
+  on_load: function () {
+    // Wait 100ms for jsPsych to fully settle, then listen for Enter
+    setTimeout(() => {
+      const handleEnter = (e) => {
+        if (e.key === 'Enter') {
+          document.removeEventListener('keydown', handleEnter);
+          jsPsych.finishTrial();
+        }
+      };
+      document.addEventListener('keydown', handleEnter);
+    }, 100); // Small delay to let jsPsych settle
+  },
+};
+
+var setStims = {
+  type: jsPsychCallFunction,
+  func: function () {
+    currentDigitCount = 0;
+    numDigits = 3;
+    consecutiveErrors = 0;
+  },
+};
 
 var testNodeForward = {
   timeline: forwardTrials,
@@ -238,10 +300,131 @@ var testNodeForward = {
   },
 };
 
-var backwardTrials = [];
-var testNodeBackward = {
-  timeline: [reverseBlockStart].concat(backwardTrials),
-  loop_function: function (data) {
+var reverseTrials = [];
+for (let i = 0; i < numTrials; i++) {
+  var trialStart = {
+    type: jsPsychHtmlKeyboardResponse,
+    stimulus: getCurrentDigitCount,
+    choices: ['NO_KEYS'],
+    stimulus_duration: 1000,
+    trial_duration: 1500,
+    data: {
+      trial_id: `test_reverse_start_trial`,
+      exp_stage: 'test',
+      stimulus_duration: 1000,
+      trial_duration: 1500,
+      direction: 'reverse',
+    },
+  };
+
+  reverseTrials.push(trialStart);
+
+  var loopNode = {
+    timeline: [reverseTrial],
+    loop_function: function (data) {
+      currentDigitCount++;
+      if (currentDigitCount < numDigits) {
+        return true;
+      } else {
+        currentDigitCount = 0;
+        return false;
+      }
+    },
+  };
+
+  reverseTrials.push(loopNode);
+
+  var responsePrompt = {
+    type: jsPsychSurveyHtmlForm,
+    html: `
+      <style>
+        input[type=number]::-webkit-outer-spin-button,
+        input[type=number]::-webkit-inner-spin-button {
+          -webkit-appearance: none;
+          margin: 0;
+        }
+        input[type=number] {
+          -moz-appearance: textfield;
+        }
+        #jspsych-survey-html-form-next {
+          display: none;
+        }
+      </style>
+      <p>Enter the digits in order:</p>
+      <input name="digit_response" type="number"
+             onkeydown="if(event.key==='Enter'){var btn=document.getElementById('jspsych-survey-html-form-next'); if(btn) btn.click();}">
+    `,
+    data: {
+      trial_id: `test_reverse_response_trial`,
+      exp_stage: 'test',
+      direction: 'reverse',
+    },
+    on_load: function () {
+      // Focus the input field after the trial loads
+      setTimeout(function () {
+        var inputField = document.querySelector('input[name="digit_response"]');
+        if (inputField) {
+          inputField.focus();
+        }
+      }, 200);
+
+      // Simulate pressing the Enter key after 5 seconds
+      setTimeout(function () {
+        var inputField = document.querySelector('input[name="digit_response"]');
+        if (inputField) {
+          var event = new KeyboardEvent('keydown', {
+            key: 'Enter',
+            code: 'Enter',
+            which: 13,
+            keyCode: 13,
+            bubbles: false,
+          });
+          inputField.dispatchEvent(event);
+        }
+      }, 5000);
+    },
+    on_finish: function (data) {
+      // Ensure it's treated as a string of digits
+      data.digit_response =
+        data.response && data.response.digit_response
+          ? data.response.digit_response
+          : '';
+
+      // Get previous trials for num digit responses
+      const allData = jsPsych.data.get().trials;
+      const lastStartIndex = allData.findLastIndex(
+        (trial) => trial.trial_id === 'test_reverse_start_trial'
+      );
+      const lastTrials = allData
+        .slice(lastStartIndex)
+        .filter((trial) => trial.trial_id === 'test_reverse_digit_trial');
+      const correctResponse = lastTrials.map((trial) => trial.current_digit);
+
+      // Reverse the correct response
+      correctResponse.reverse();
+
+      // append to data object
+      data.correct_response = correctResponse.join('');
+      data.correct_trial =
+        data.correct_response === data.digit_response ? 1 : 0;
+
+      if (data.correct_trial == 1) {
+        numDigits++;
+      } else {
+        consecutiveErrors++;
+        if (consecutiveErrors === 2 && numDigits > minDigits) {
+          numDigits--;
+          consecutiveErrors = 0;
+        }
+      }
+    },
+  };
+  reverseTrials.push(responsePrompt);
+}
+
+var testNodeReverse = {
+  timeline: reverseTrials,
+  loop_function: function () {
     return false;
   },
 };
@@ -300,7 +483,9 @@ var digit_span_init = () => {
   digit_span_experiment.push(fullscreen);
   digit_span_experiment.push(instructionNode);
   digit_span_experiment.push(testNodeForward);
-  digit_span_experiment.push(testNodeBackward);
+  digit_span_experiment.push(setStims);
+  digit_span_experiment.push(reverseTestBlockStart);
+  digit_span_experiment.push(testNodeReverse);
   digit_span_experiment.push(endBlock);
   digit_span_experiment.push(exitFullscreen);
 };

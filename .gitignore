@@ -1,0 +1,6 @@
+# Virtual environment with expfactory_deploy_local to 
+# deploy experiments locally
+.venv/
+
+# Task static directories created with expfactory_deploy_local
+static/

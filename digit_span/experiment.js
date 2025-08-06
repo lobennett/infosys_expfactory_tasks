@@ -31,8 +31,7 @@ const sampleDigitWithReplacement = () => {
   return `<div class='bigbox'><div class='picture_box'><p class='block-text'>${digit}</p></div></div>`;
 };
 
-// var instructTimeThresh = 5; // threshold for instructions, in seconds
-var instructTimeThresh = 0;
+var instructTimeThresh = 5; // threshold for instructions, in seconds
 var sumInstructTime = 0; // time spent on instructions, in seconds
 var feedbackInstructText = `
   <p class="center-block-text">
@@ -61,6 +60,8 @@ var feedbackInstructBlock = {
   trial_duration: 30000,
 };
 
+var instructionTimeout;
+
 // Show the one instruction page, allow clicking or timeout
 var instructionsBlock = {
   type: jsPsychInstructions,
@@ -72,11 +73,14 @@ var instructionsBlock = {
     stimulus: pageInstruct,
   },
   on_load: function () {
-    setTimeout(() => {
+    instructionTimeout = setTimeout(() => {
+      console.log('Instructions timed out. Advancing automatically.');
       jsPsych.finishTrial(); // auto-advance after 60 seconds
     }, 60000);
   },
   on_finish: function (data) {
+    clearTimeout(instructionTimeout);
+
     if (data.rt != null) {
       sumInstructTime += data.rt;
     } else {

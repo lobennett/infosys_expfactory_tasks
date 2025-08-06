@@ -51,6 +51,9 @@ for (let i = 0; i < kirbyOptions.small_amt.length; i++) {
       exp_stage: 'test',
       stimulus_duration: 60000,
       trial_duration: 60000,
+      today_amount: kirbyOptions.small_amt[i],
+      later_amount: kirbyOptions.large_amt[i],
+      later_delay: kirbyOptions.later_del[i],
     },
     choices: ['q', 'p'],
     stimulus: `
@@ -78,7 +81,7 @@ for (let i = 0; i < kirbyOptions.small_amt.length; i++) {
        </div>
      </div>
     `,
-    post_trial_gap: 500,
+    post_trial_gap: 1000,
   };
   testTrials.push(trial);
 }
@@ -156,9 +159,12 @@ var practiceTrial = {
     stimulus_duration: 10000,
     trial_duration: 10000,
     exp_stage: 'practice',
+    today_amount: 20,
+    later_amount: 25,
+    later_delay: 5,
   },
-  // stimulus_duration: 10000,
-  // trial_duration: 10000,
+  stimulus_duration: 10000,
+  trial_duration: 10000,
   post_trial_gap: 1000,
 };
 
@@ -172,7 +178,7 @@ var testStartBlock = {
   },
   choices: ['Enter'],
   stimulus:
-    '<div class="centerbox"><p class="center-block-text">You are now ready to begin the test trials. Remember to indicate your <b>true</b> preferences. Press <i>enter</i> to continue. If you do not press <i>enter</i> within 1 minute, this screen will automatically advance to the next one.</p></div>',
+    '<div class="centerbox"><p class="center-block-text">You are now ready to begin the test trials. Remember to indicate your <b>true</b> preferences. Press <i>enter</i> to continue. This screen will automatically advance in 1 minute.</p></div>',
   trial_duration: 60000,
   stimulus_duration: 60000,
   response_ends_trial: true,

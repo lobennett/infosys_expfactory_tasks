@@ -44,7 +44,7 @@ const pageInstruct = [
     <b>Look at the top part (the pattern) of this sample problem.</b> Notice that going across the rows, the number of horizontal lines is equal. Going down the columns, the number of squares is equal.
     </p>
     <img src="${pathSource}practice/sample_matrix_top.jpg" alt="Sample Matrix Top" class="center-block-image" style="width: 400px; height: auto;">
-          <p class="center-block-text" style="font-size: 18px; margin-top: 20px;">
+      <p class="center-block-text" style="font-size: 18px; margin-top: 20px;">
       <b>Look at the solution of this sample problem.</b> The best completion of the missing cell is the alternative "E". The correct response to this question would be to press the "e" key.
       </p>
       <img src="${pathSource}practice/sample_matrix_bottom.jpg" alt="Sample Matrix Bottom" class="center-block-image" style="width: 400px; height: auto;">
@@ -135,8 +135,10 @@ var practiceTrial1 = {
   type: jsPsychHtmlKeyboardResponse,
   stimulus: `
     <div class="centerbox">
-      <img src="${pathSource}practice/practice_top_1.jpg" alt="Sample Matrix Top" class="center-block-image" style="width: 400px; height: auto; margin-bottom: 20px;">
-      <img src="${pathSource}practice/practice_bottom_1.jpg" alt="Sample Matrix Bottom" class="center-block-image" style="width: 400px; height: auto; margin-bottom: 20px;">
+      <div class="flex-container">
+        <img src="${pathSource}practice/practice_top_1.jpg" alt="Sample Matrix Top" class="center-block-image" style="width: 400px; height: auto; margin-bottom: 20px;">
+        <img src="${pathSource}practice/practice_bottom_1.jpg" alt="Sample Matrix Bottom" class="center-block-image" style="width: 400px; height: auto; margin-bottom: 20px;">
+      </div>
     </div>
     `,
   choices: ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'],
@@ -208,8 +210,10 @@ var practiceTrial2 = {
   type: jsPsychHtmlKeyboardResponse,
   stimulus: `
     <div class="centerbox">
-      <img src="${pathSource}practice/practice_top_2.jpg" alt="Sample Matrix Top" class="center-block-image" style="width: 400px; height: auto; margin-bottom: 20px;">
-      <img src="${pathSource}practice/practice_bottom_2.jpg" alt="Sample Matrix Bottom" class="center-block-image" style="width: 400px; height: auto; margin-bottom: 20px;">
+      <div class="flex-container">
+        <img src="${pathSource}practice/practice_top_2.jpg" alt="Sample Matrix Top" class="center-block-image" style="width: 400px; height: auto; margin-bottom: 20px;">
+        <img src="${pathSource}practice/practice_bottom_2.jpg" alt="Sample Matrix Bottom" class="center-block-image" style="width: 400px; height: auto; margin-bottom: 20px;">
+      </div>
     </div>
     `,
   choices: ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'],
@@ -286,8 +290,10 @@ for (let i = 1; i <= testLen; i++) {
     type: jsPsychHtmlKeyboardResponse,
     stimulus: `
     <div class="centerbox">
-    <img src="${pathSource}top_${i}.jpg" alt="Sample Matrix Top" class="center-block-image" style="width: 400px; height: auto; margin-bottom: 20px;">
-    <img src="${pathSource}bottom_${i}.jpg" alt="Sample Matrix Bottom" class="center-block-image" style="width: 400px; height: auto; margin-bottom: 20px;">
+      <div class="flex-container">
+        <img src="${pathSource}top_${i}.jpg" alt="Sample Matrix Top" class="center-block-image" style="width: 400px; height: auto; margin-bottom: 20px;">
+        <img src="${pathSource}bottom_${i}.jpg" alt="Sample Matrix Bottom" class="center-block-image" style="width: 400px; height: auto; margin-bottom: 20px;">
+      </div>
     `,
     choices: ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'],
     data: {

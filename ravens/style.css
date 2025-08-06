@@ -97,3 +97,10 @@ img.center {
 span.required {
   display: none !important;
 }
+
+.flex-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}

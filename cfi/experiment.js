@@ -25,7 +25,7 @@ var pageInstruct = [
 ];
 
 var testTrials = [];
-var likert_scale = [
+var likertScale = [
   'Strongly Disagree',
   'Disagree',
   'Somewhat Disagree',
@@ -42,77 +42,80 @@ var trial = {
     {
       prompt:
         'I am good at analyzing situations and identifying what is required.',
-      labels: likert_scale,
+      labels: likertScale,
     },
     {
       prompt: 'I easily make decisions when faced with difficult situations.',
-      labels: likert_scale,
+      labels: likertScale,
     },
     {
       prompt: 'I consider multiple options before making decisions.',
-      labels: likert_scale,
+      labels: likertScale,
     },
     {
       prompt:
         'When I encounter difficult situations, I feel like I am in control and capable of coping.',
-      labels: likert_scale,
+      labels: likertScale,
     },
     {
       prompt: 'I look at challenges and obstacles from many different angles.',
-      labels: likert_scale,
+      labels: likertScale,
     },
     {
       prompt:
         'I seek additional information not immediately available before jumping to conclusions.',
-      labels: likert_scale,
+      labels: likertScale,
     },
     {
       prompt:
         'When I encounter a difficult situation, I am calm enough to think of a way to resolve the situation.',
-      labels: likert_scale,
+      labels: likertScale,
     },
     {
       prompt:
         "I try to think about things from another person's point of view.",
-      labels: likert_scale,
+      labels: likertScale,
     },
     {
       prompt:
         'I find it exciting that there are so many ways to deal with difficult situations.',
-      labels: likert_scale,
+      labels: likertScale,
     },
     {
       prompt: "I am good at putting myself in others' shoes.",
-      labels: likert_scale,
+      labels: likertScale,
     },
     {
       prompt:
         'When I encounter difficult situations, I typically know what to do.',
-      labels: likert_scale,
+      labels: likertScale,
     },
     {
       prompt:
         'It is important to look at difficult situations from many angles.',
-      labels: likert_scale,
+      labels: likertScale,
     },
     {
       prompt:
         'When faced with a problem, I consider multiple options before deciding how to react.',
-      labels: likert_scale,
+      labels: likertScale,
     },
     {
       prompt: 'I look at situations from different viewpoints.',
-      labels: likert_scale,
+      labels: likertScale,
     },
     {
       prompt: 'I can overcome the difficulties in life that I face.',
-      labels: likert_scale,
+      labels: likertScale,
     },
     {
       prompt: 'I can easily change my mind when presented with options.',
-      labels: likert_scale,
+      labels: likertScale,
     },
   ],
+  on_finish: function (data) {
+    data.likert_scale = likertScale;
+  },
 };
 testTrials.push(trial);
 

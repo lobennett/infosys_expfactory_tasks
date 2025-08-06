@@ -25,7 +25,7 @@ var pageInstruct = [
 ];
 
 var testTrials = [];
-var likert_scale = [
+var likertScale = [
   'Disagree strongly',
   'Disagree moderately',
   'Disagree a little',
@@ -41,45 +41,48 @@ var trial = {
   questions: [
     {
       prompt: 'Extraverted, enthusiastic.',
-      labels: likert_scale,
+      labels: likertScale,
     },
     {
       prompt: 'Critical, quarrelsome.',
-      labels: likert_scale,
+      labels: likertScale,
     },
     {
       prompt: 'Dependable, self-disciplined.',
-      labels: likert_scale,
+      labels: likertScale,
     },
     {
       prompt: 'Anxious, easily upset.',
-      labels: likert_scale,
+      labels: likertScale,
     },
     {
       prompt: 'Open to new experiences, complex.',
-      labels: likert_scale,
+      labels: likertScale,
     },
     {
       prompt: 'Reserved, quiet.',
-      labels: likert_scale,
+      labels: likertScale,
     },
     {
       prompt: 'Sympathetic, warm.',
-      labels: likert_scale,
+      labels: likertScale,
     },
     {
       prompt: 'Disorganized, careless.',
-      labels: likert_scale,
+      labels: likertScale,
     },
     {
       prompt: 'Calm, emotionally stable.',
-      labels: likert_scale,
+      labels: likertScale,
     },
     {
       prompt: 'Conventional, uncreative.',
-      labels: likert_scale,
+      labels: likertScale,
     },
   ],
+  on_finish: function (data) {
+    data.likert_scale = likertScale;
+  },
 };
 testTrials.push(trial);
 

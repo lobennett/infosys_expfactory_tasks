@@ -25,7 +25,7 @@ var pageInstruct = [
 ];
 
 var testTrials = [];
-var likert_scale = [
+var likertScale = [
   'Strongly Disagree',
   'Disagree',
   'Neutral',
@@ -39,37 +39,40 @@ var trial = {
   questions: [
     {
       prompt: 'Taking risks makes life more fun.',
-      labels: likert_scale,
+      labels: likertScale,
     },
     {
       prompt: "My friends would say that I'm a risk-taker.",
-      labels: likert_scale,
+      labels: likertScale,
     },
     {
       prompt: 'I enjoy taking risks in most aspects of my life.',
-      labels: likert_scale,
+      labels: likertScale,
     },
     {
       prompt: 'I would take a risk even if it meant I might get hurt.',
-      labels: likert_scale,
+      labels: likertScale,
     },
     {
       prompt: 'Taking risks is an important part of my life.',
-      labels: likert_scale,
+      labels: likertScale,
     },
     {
       prompt: 'I commonly make risky decisions.',
-      labels: likert_scale,
+      labels: likertScale,
     },
     {
       prompt: 'I am a believer of taking chances.',
-      labels: likert_scale,
+      labels: likertScale,
     },
     {
       prompt: 'I am attracted, rather than scared, by risk.',
-      labels: likert_scale,
+      labels: likertScale,
     },
   ],
+  on_finish: function (data) {
+    data.likert_scale = likertScale;
+  },
 };
 testTrials.push(trial);
 

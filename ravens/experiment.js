@@ -248,7 +248,7 @@ var testStartBlock = {
   },
   choices: ['Enter'],
   stimulus:
-    '<div class="centerbox"><p class="center-block-text">You are now ready to begin the test trials. Press <i>enter</i> to continue. If you do not press <i>enter</i> within 1 minute, this screen will automatically advance to the next one.</p></div>',
+    '<div class="centerbox"><p class="center-block-text">You are now ready to begin the test trials. Press <i>enter</i> to continue. This screen will automatically advance in 1 minute.</p></div>',
   trial_duration: 60000,
   response_ends_trial: true,
 };

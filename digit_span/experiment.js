@@ -282,7 +282,7 @@ var reverseTestBlockStart = {
   trial_duration: 60000,
   stimulus: `
   <div class="centerbox" style="height: 50vh;">
-    <p class="center-block-text">In these next trials, instead of reporting back the sequence you just saw, report the <strong>reverse</strong> of that sequence. So the last item should be first in your response, the second to last should be the second in your response, etc...</p>
+    <p class="center-block-text">In these next trials, instead of reporting back the sequence you just saw, report the <strong>reverse</strong> of that sequence. So the last item should be first in your response, the second to last should be the second in your response, etc.</p>
     <p class="center-block-text">Press <i>enter</i> to continue.</p>
     <p class="center-block-text">This screen will automatically advance in 1 minute.</p>
   </div>`,

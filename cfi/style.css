@@ -101,5 +101,9 @@ span.required {
 /* Survey styling */
 .jspsych-survey-likert-opt-label {
   color: white !important;
+}
+
+.jspsych-survey-likert-opt-label input,
+.jspsych-survey-likert-opt-label {
   cursor: pointer !important;
 }

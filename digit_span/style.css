@@ -97,3 +97,20 @@ img.center {
 span.required {
   display: none !important;
 }
+
+.digit-probe,
+.digit-count {
+  font-size: 42px;
+}
+
+.digit-form-header {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.digit-form-input {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}

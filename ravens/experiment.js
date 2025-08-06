@@ -1,5 +1,11 @@
 // Preload images
-var pathSource = '/static/experiments/ravens/images/';
+// Using git commit hash for compatibility with expfactory
+var GIT_HASH = '142986a6f28946223d8cb0b942ac0d0690edf7a8';
+var pathSource =
+  'https://deploy.expfactory.org/deployment/repo/infosys_expfactory_tasks/' +
+  GIT_HASH +
+  '/ravens/images/';
+
 var images = [];
 for (let i = 1; i <= 18; i++) {
   images.push(pathSource + `bottom_${i}.jpg`);

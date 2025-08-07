@@ -185,7 +185,7 @@ var endBlock = {
   type: jsPsychHtmlKeyboardResponse,
   data: {
     trial_id: 'end',
-    exp_id: 'kirby',
+    exp_id: 'grips',
     trial_duration: 10000,
   },
   trial_duration: 10000,

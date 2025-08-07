@@ -59,35 +59,36 @@ var likertScale = [
 
 var surveyQuestions = [
   {
-    prompt:
-      'I am good at analyzing situations and identifying what is required.',
-    labels: likertScale,
-  },
-  {
-    prompt: 'I easily make decisions when faced with difficult situations.',
-    labels: likertScale,
-  },
-  {
-    prompt: 'I consider multiple options before making decisions.',
+    prompt: 'I am good at "sizing up" situations.',
     labels: likertScale,
   },
   {
     prompt:
-      'When I encounter difficult situations, I feel like I am in control and capable of coping.',
+      'I have a hard time making decisions when faced with difficult situations.',
     labels: likertScale,
   },
   {
-    prompt: 'I look at challenges and obstacles from many different angles.',
-    labels: likertScale,
-  },
-  {
-    prompt:
-      'I seek additional information not immediately available before jumping to conclusions.',
+    prompt: 'I consider multiple options before making a decision.',
     labels: likertScale,
   },
   {
     prompt:
-      'When I encounter a difficult situation, I am calm enough to think of a way to resolve the situation.',
+      'When I encounter difficult situations, I feel like I am losing control.',
+    labels: likertScale,
+  },
+  {
+    prompt:
+      'I like to look at difficult situations from many different angles.',
+    labels: likertScale,
+  },
+  {
+    prompt:
+      'I seek additional information not immediately available before attributing causes to behavior.',
+    labels: likertScale,
+  },
+  {
+    prompt:
+      'When encountering difficult situations, I become so stressed that I can not think of a way to resolve the situation.',
     labels: likertScale,
   },
   {
@@ -96,7 +97,7 @@ var surveyQuestions = [
   },
   {
     prompt:
-      'I find it exciting that there are so many ways to deal with difficult situations.',
+      'I find it troublesome that there are so many different ways to deal with difficult situations.',
     labels: likertScale,
   },
   {
@@ -105,7 +106,7 @@ var surveyQuestions = [
   },
   {
     prompt:
-      'When I encounter difficult situations, I typically know what to do.',
+      "When I encounter difficult situations, I just don't know what to do.",
     labels: likertScale,
   },
   {
@@ -114,19 +115,39 @@ var surveyQuestions = [
   },
   {
     prompt:
-      'When faced with a problem, I consider multiple options before deciding how to react.',
+      'When in difficult situations, I consider multiple options before deciding how to behave.',
     labels: likertScale,
   },
   {
-    prompt: 'I look at situations from different viewpoints.',
+    prompt: 'I often look at a situation from different viewpoints.',
     labels: likertScale,
   },
   {
-    prompt: 'I can overcome the difficulties in life that I face.',
+    prompt: 'I am capable of overcoming the difficulties in life that I face.',
     labels: likertScale,
   },
   {
-    prompt: 'I can easily change my mind when presented with options.',
+    prompt:
+      'I consider all the available facts and information when attributing causes to behavior.',
+    labels: likertScale,
+  },
+  {
+    prompt: 'I feel I have no power to change things in difficult situations.',
+    labels: likertScale,
+  },
+  {
+    prompt:
+      'When I encounter difficult situations, I stop and try to think of several ways to resolve it.',
+    labels: likertScale,
+  },
+  {
+    prompt:
+      "I can think of more than one way to resolve a difficult situation I'm confronted with.",
+    labels: likertScale,
+  },
+  {
+    prompt:
+      'I consider multiple options before responding to difficult situations.',
     labels: likertScale,
   },
 ];

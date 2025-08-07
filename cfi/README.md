@@ -34,7 +34,10 @@ Responses are coded 0-6 corresponding to the 7-point Likert scale. Higher scores
 
 ## Task Screenshot
 
-![CFI Task Screenshot](../assets/screenshots/cfi.png)
+See [Dennis & Vander Wal, 2010](https://rdcu.be/ezGts)
+
+![CFI Task Screenshot](../assets/screenshots/cfi_1.png)
+![CFI Task Screenshot](../assets/screenshots/cfi_2.png)
 
 ## Preview
 

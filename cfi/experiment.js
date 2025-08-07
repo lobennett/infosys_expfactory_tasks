@@ -2,6 +2,28 @@
 const getInstructFeedback = () =>
   `<div class="centerbox"><p class="center-block-text">${feedbackInstructText}</p></div>`;
 
+// Map survey responses to question prompts
+const mapResponsesToQuestions = (data, surveyQuestions, likertScale) => {
+  Object.keys(data.response).forEach((key, idx) => {
+    const question = surveyQuestions[idx];
+    if (question && question.prompt) {
+      const responseIndex = data.response[key];
+      const questionCleaned = question.prompt
+        .replace(/[.,-]/g, '')
+        .replace(/\s+/g, '_')
+        .toLowerCase();
+      // If no response, set to "NA"
+      if (responseIndex === '') {
+        data[questionCleaned] = 'NA';
+      } else {
+        const scaleValue = likertScale[responseIndex];
+        const scaleValueCleaned = scaleValue.replace(/\s+/g, '_').toLowerCase();
+        data[questionCleaned] = scaleValueCleaned;
+      }
+    }
+  });
+};
+
 var instructTimeThresh = 5; // threshold for instructions, in seconds
 var sumInstructTime = 0; // time spent on instructions, in seconds
 var feedbackInstructText = `
@@ -34,87 +56,89 @@ var likertScale = [
   'Agree',
   'Strongly Agree',
 ];
+
+var surveyQuestions = [
+  {
+    prompt:
+      'I am good at analyzing situations and identifying what is required.',
+    labels: likertScale,
+  },
+  {
+    prompt: 'I easily make decisions when faced with difficult situations.',
+    labels: likertScale,
+  },
+  {
+    prompt: 'I consider multiple options before making decisions.',
+    labels: likertScale,
+  },
+  {
+    prompt:
+      'When I encounter difficult situations, I feel like I am in control and capable of coping.',
+    labels: likertScale,
+  },
+  {
+    prompt: 'I look at challenges and obstacles from many different angles.',
+    labels: likertScale,
+  },
+  {
+    prompt:
+      'I seek additional information not immediately available before jumping to conclusions.',
+    labels: likertScale,
+  },
+  {
+    prompt:
+      'When I encounter a difficult situation, I am calm enough to think of a way to resolve the situation.',
+    labels: likertScale,
+  },
+  {
+    prompt: "I try to think about things from another person's point of view.",
+    labels: likertScale,
+  },
+  {
+    prompt:
+      'I find it exciting that there are so many ways to deal with difficult situations.',
+    labels: likertScale,
+  },
+  {
+    prompt: "I am good at putting myself in others' shoes.",
+    labels: likertScale,
+  },
+  {
+    prompt:
+      'When I encounter difficult situations, I typically know what to do.',
+    labels: likertScale,
+  },
+  {
+    prompt: 'It is important to look at difficult situations from many angles.',
+    labels: likertScale,
+  },
+  {
+    prompt:
+      'When faced with a problem, I consider multiple options before deciding how to react.',
+    labels: likertScale,
+  },
+  {
+    prompt: 'I look at situations from different viewpoints.',
+    labels: likertScale,
+  },
+  {
+    prompt: 'I can overcome the difficulties in life that I face.',
+    labels: likertScale,
+  },
+  {
+    prompt: 'I can easily change my mind when presented with options.',
+    labels: likertScale,
+  },
+];
+
 var trial = {
   type: jsPsychSurveyLikert,
   preamble:
     '<div style="text-align: center; margin-top: 100px;"><b>Please indicate the degree to which you disagree or agree with each statement.</b></div>',
-  questions: [
-    {
-      prompt:
-        'I am good at analyzing situations and identifying what is required.',
-      labels: likertScale,
-    },
-    {
-      prompt: 'I easily make decisions when faced with difficult situations.',
-      labels: likertScale,
-    },
-    {
-      prompt: 'I consider multiple options before making decisions.',
-      labels: likertScale,
-    },
-    {
-      prompt:
-        'When I encounter difficult situations, I feel like I am in control and capable of coping.',
-      labels: likertScale,
-    },
-    {
-      prompt: 'I look at challenges and obstacles from many different angles.',
-      labels: likertScale,
-    },
-    {
-      prompt:
-        'I seek additional information not immediately available before jumping to conclusions.',
-      labels: likertScale,
-    },
-    {
-      prompt:
-        'When I encounter a difficult situation, I am calm enough to think of a way to resolve the situation.',
-      labels: likertScale,
-    },
-    {
-      prompt:
-        "I try to think about things from another person's point of view.",
-      labels: likertScale,
-    },
-    {
-      prompt:
-        'I find it exciting that there are so many ways to deal with difficult situations.',
-      labels: likertScale,
-    },
-    {
-      prompt: "I am good at putting myself in others' shoes.",
-      labels: likertScale,
-    },
-    {
-      prompt:
-        'When I encounter difficult situations, I typically know what to do.',
-      labels: likertScale,
-    },
-    {
-      prompt:
-        'It is important to look at difficult situations from many angles.',
-      labels: likertScale,
-    },
-    {
-      prompt:
-        'When faced with a problem, I consider multiple options before deciding how to react.',
-      labels: likertScale,
-    },
-    {
-      prompt: 'I look at situations from different viewpoints.',
-      labels: likertScale,
-    },
-    {
-      prompt: 'I can overcome the difficulties in life that I face.',
-      labels: likertScale,
-    },
-    {
-      prompt: 'I can easily change my mind when presented with options.',
-      labels: likertScale,
-    },
-  ],
+  questions: surveyQuestions,
   on_finish: function (data) {
     data.likert_scale = likertScale;
+    mapResponsesToQuestions(data, surveyQuestions, likertScale);
   },
 };
 testTrials.push(trial);

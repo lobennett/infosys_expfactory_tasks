@@ -2,6 +2,28 @@
 const getInstructFeedback = () =>
   `<div class="centerbox"><p class="center-block-text">${feedbackInstructText}</p></div>`;
 
+// Map survey responses to question prompts
+const mapResponsesToQuestions = (data, surveyQuestions, likertScale) => {
+  Object.keys(data.response).forEach((key, idx) => {
+    const question = surveyQuestions[idx];
+    if (question && question.prompt) {
+      const responseIndex = data.response[key];
+      const questionCleaned = question.prompt
+        .replace(/[.,-]/g, '')
+        .replace(/\s+/g, '_')
+        .toLowerCase();
+      // If no response, set to "NA"
+      if (responseIndex === '') {
+        data[questionCleaned] = 'NA';
+      } else {
+        const scaleValue = likertScale[responseIndex];
+        const scaleValueCleaned = scaleValue.replace(/\s+/g, '_').toLowerCase();
+        data[questionCleaned] = scaleValueCleaned;
+      }
+    }
+  });
+};
+
 var instructTimeThresh = 5; // threshold for instructions, in seconds
 var sumInstructTime = 0; // time spent on instructions, in seconds
 var feedbackInstructText = `
@@ -34,54 +56,58 @@ var likertScale = [
   'Agree moderately',
   'Agree strongly',
 ];
+
+var surveyQuestions = [
+  {
+    prompt: 'Extraverted, enthusiastic.',
+    labels: likertScale,
+  },
+  {
+    prompt: 'Critical, quarrelsome.',
+    labels: likertScale,
+  },
+  {
+    prompt: 'Dependable, self-disciplined.',
+    labels: likertScale,
+  },
+  {
+    prompt: 'Anxious, easily upset.',
+    labels: likertScale,
+  },
+  {
+    prompt: 'Open to new experiences, complex.',
+    labels: likertScale,
+  },
+  {
+    prompt: 'Reserved, quiet.',
+    labels: likertScale,
+  },
+  {
+    prompt: 'Sympathetic, warm.',
+    labels: likertScale,
+  },
+  {
+    prompt: 'Disorganized, careless.',
+    labels: likertScale,
+  },
+  {
+    prompt: 'Calm, emotionally stable.',
+    labels: likertScale,
+  },
+  {
+    prompt: 'Conventional, uncreative.',
+    labels: likertScale,
+  },
+];
+
 var trial = {
   type: jsPsychSurveyLikert,
   preamble:
     '<div style="text-align: center; margin-top: 100px;"><b>I see myself as...</b></div>',
-  questions: [
-    {
-      prompt: 'Extraverted, enthusiastic.',
-      labels: likertScale,
-    },
-    {
-      prompt: 'Critical, quarrelsome.',
-      labels: likertScale,
-    },
-    {
-      prompt: 'Dependable, self-disciplined.',
-      labels: likertScale,
-    },
-    {
-      prompt: 'Anxious, easily upset.',
-      labels: likertScale,
-    },
-    {
-      prompt: 'Open to new experiences, complex.',
-      labels: likertScale,
-    },
-    {
-      prompt: 'Reserved, quiet.',
-      labels: likertScale,
-    },
-    {
-      prompt: 'Sympathetic, warm.',
-      labels: likertScale,
-    },
-    {
-      prompt: 'Disorganized, careless.',
-      labels: likertScale,
-    },
-    {
-      prompt: 'Calm, emotionally stable.',
-      labels: likertScale,
-    },
-    {
-      prompt: 'Conventional, uncreative.',
-      labels: likertScale,
-    },
-  ],
+  questions: surveyQuestions,
   on_finish: function (data) {
     data.likert_scale = likertScale;
+    mapResponsesToQuestions(data, surveyQuestions, likertScale);
   },
 };
 testTrials.push(trial);

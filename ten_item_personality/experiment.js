@@ -24,7 +24,7 @@ const mapResponsesToQuestions = (data, surveyQuestions, likertScale) => {
   });
 };
 
-var instructTimeThresh = 5; // threshold for instructions, in seconds
+var instructTimeThresh = 2; // threshold for instructions, in seconds
 var sumInstructTime = 0; // time spent on instructions, in seconds
 var feedbackInstructText = `
   <p class="center-block-text">
@@ -40,7 +40,7 @@ var pageInstruct = [
   `
   <div class="centerbox">
     <p class="center-block-text">
-      In this survey you will be responding to general questions that may or may not describe you. Please indicate the degree to which you disagree or agree with each statement. The survey begins on the next page.
+      In this survey you will be responding to a number of personality traits that may or may not apply to you. Please indicate the extent to which you agree or disagree with each statement. You should rate the extent to which the pair of traits applies to you, even if one characteristic applies more strongly than the other. The survey begins on the next page.
     </p>
   </div>
   `,
@@ -124,6 +124,7 @@ var instructionsBlock = {
     trial_id: 'instructions',
     stimulus: pageInstruct,
   },
+  allow_backward: false,
   on_load: function () {
     instructionTimeout = setTimeout(() => {
       console.log('Instructions timed out. Advancing automatically.');

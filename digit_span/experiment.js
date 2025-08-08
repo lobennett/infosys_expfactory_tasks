@@ -5,6 +5,11 @@ const getInstructFeedback = () =>
 const getFeedback = () =>
   `<div class="bigbox"><div class="picture_box"><p class="block-text">${feedbackText}</p></div></div>`;
 
+const getTrialFeedback = () =>
+  `<div class='bigbox'><div class='picture_box'><p class='digit-feedback'>${
+    correctTrial === 1 ? 'Correct!' : 'Incorrect!'
+  }</p></div></div>`;
+
 const getCurrentDigitCount = () =>
   `<div class="bigbox"><div class="picture_box"><p class="digit-count">${numDigits} Digits</p></div></div>`;
 
@@ -48,6 +53,7 @@ var minDigits = 1;
 var consecutiveErrors = 0;
 var currentDigit;
 var currentDigitCount = 0;
+var correctTrial;
 
 var feedbackInstructBlock = {
   type: jsPsychHtmlKeyboardResponse,
@@ -70,6 +76,7 @@ var instructionsBlock = {
   pages: pageInstruct,
   allow_keys: false,
   show_clickable_nav: true,
+  allow_backward: false,
   data: {
     trial_id: 'instructions',
     stimulus: pageInstruct,
@@ -257,6 +264,7 @@ for (let i = 0; i < numTrials; i++) {
       data.correct_response = correctResponse.join('');
       data.correct_trial =
         data.correct_response === data.digit_response ? 1 : 0;
+      correctTrial = data.correct_trial;
 
       if (data.correct_trial == 1) {
         numDigits++;
@@ -270,6 +278,22 @@ for (let i = 0; i < numTrials; i++) {
     },
   };
   forwardTrials.push(responsePrompt);
+
+  var trialFeedback = {
+    type: jsPsychHtmlKeyboardResponse,
+    stimulus: getTrialFeedback,
+    choices: ['NO_KEYS'],
+    data: {
+      trial_id: `test_forward_feedback_trial`,
+      exp_stage: 'test',
+      direction: 'forward',
+      trial_duration: 1000,
+      stimulus_duration: 1000,
+    },
+    trial_duration: 1000,
+    stimulus_duration: 1000,
+  };
+  forwardTrials.push(trialFeedback);
 }
 
 var reverseTestBlockStart = {
@@ -433,6 +457,7 @@ for (let i = 0; i < numTrials; i++) {
       data.correct_response = correctResponse.join('');
       data.correct_trial =
         data.correct_response === data.digit_response ? 1 : 0;
+      correctTrial = data.correct_trial;
 
       if (data.correct_trial == 1) {
         numDigits++;
@@ -446,6 +471,22 @@ for (let i = 0; i < numTrials; i++) {
     },
   };
   reverseTrials.push(responsePrompt);
+
+  var trialFeedback = {
+    type: jsPsychHtmlKeyboardResponse,
+    stimulus: getTrialFeedback,
+    choices: ['NO_KEYS'],
+    data: {
+      trial_id: `test_reverse_feedback_trial`,
+      exp_stage: 'test',
+      direction: 'reverse',
+      trial_duration: 1000,
+      stimulus_duration: 1000,
+    },
+    trial_duration: 1000,
+    stimulus_duration: 1000,
+  };
+  reverseTrials.push(trialFeedback);
 }
 
 var testNodeReverse = {

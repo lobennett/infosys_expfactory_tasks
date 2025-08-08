@@ -99,7 +99,8 @@ span.required {
 }
 
 .digit-probe,
-.digit-count {
+.digit-count,
+.digit-feedback {
   font-size: 42px;
 }
 

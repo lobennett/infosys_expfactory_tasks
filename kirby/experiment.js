@@ -98,6 +98,7 @@ var instructionsBlock = {
     trial_id: 'instructions',
     stimulus: pageInstruct,
   },
+  allow_backward: false,
   on_load: function () {
     instructionTimeout = setTimeout(() => {
       console.log('Instructions timed out. Advancing automatically.');

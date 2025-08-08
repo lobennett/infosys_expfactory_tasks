@@ -24,11 +24,11 @@ const mapResponsesToQuestions = (data, surveyQuestions, likertScale) => {
   });
 };
 
-var instructTimeThresh = 5; // threshold for instructions, in seconds
+var instructTimeThresh = 2; // threshold for instructions, in seconds
 var sumInstructTime = 0; // time spent on instructions, in seconds
 var feedbackInstructText = `
   <p class="center-block-text">
-    Welcome! This experiment will take around 5 minutes.
+    Welcome! This experiment will take around 3 minutes.
   </p>
   <p class="center-block-text">
     To avoid technical issues, please keep the experiment tab (on Chrome or Firefox) active and in fullscreen mode for the whole duration of each task.
@@ -155,7 +155,7 @@ var surveyQuestions = [
 var trial = {
   type: jsPsychSurveyLikert,
   preamble:
-    '<div style="text-align: center; margin-top: 100px;"><b>Please indicate the degree to which you disagree or agree with each statement.</b></div>',
+    '<div style="text-align: center; margin-top: 100px;"><b>Please use the scale below to indicate the extent to which you agree or disagree with the following statements.</b></div>',
   questions: surveyQuestions,
   on_finish: function (data) {
     data.likert_scale = likertScale;
@@ -172,6 +172,7 @@ var instructionsBlock = {
   pages: pageInstruct,
   allow_keys: false,
   show_clickable_nav: true,
+  allow_backward: false,
   data: {
     trial_id: 'instructions',
     stimulus: pageInstruct,

@@ -24,11 +24,11 @@ const mapResponsesToQuestions = (data, surveyQuestions, likertScale) => {
   });
 };
 
-var instructTimeThresh = 5; // threshold for instructions, in seconds
+var instructTimeThresh = 2; // threshold for instructions, in seconds
 var sumInstructTime = 0; // time spent on instructions, in seconds
 var feedbackInstructText = `
   <p class="center-block-text">
-    Welcome! This experiment will take around 5 minutes.
+    Welcome! This experiment will take around 2 minutes.
   </p>
   <p class="center-block-text">
     To avoid technical issues, please keep the experiment tab (on Chrome or Firefox) active and in fullscreen mode for the whole duration of each task.
@@ -109,6 +109,7 @@ var instructionsBlock = {
   pages: pageInstruct,
   allow_keys: false,
   show_clickable_nav: true,
+  allow_backward: false,
   data: {
     trial_id: 'instructions',
     stimulus: pageInstruct,

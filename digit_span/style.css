@@ -101,17 +101,17 @@ span.required {
 .digit-probe,
 .digit-count,
 .digit-feedback {
-  font-size: 42px;
+  font-size: 72px;
 }
 
 .digit-form-header {
-  font-size: 24px;
+  font-size: 72px;
   font-weight: bold;
   margin-bottom: 20px;
 }
 
 .digit-form-input {
-  font-size: 24px;
+  font-size: 72px;
   font-weight: bold;
   margin-bottom: 20px;
 }

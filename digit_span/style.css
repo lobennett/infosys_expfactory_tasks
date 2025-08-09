@@ -105,13 +105,13 @@ span.required {
 }
 
 .digit-form-header {
-  font-size: 72px;
+  font-size: 48px;
   font-weight: bold;
-  margin-bottom: 20px;
+  margin-bottom: 24px;
 }
 
 .digit-form-input {
-  font-size: 72px;
+  font-size: 48px;
   font-weight: bold;
-  margin-bottom: 20px;
+  margin-bottom: 24px;
 }

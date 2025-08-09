@@ -58,34 +58,42 @@ var surveyQuestions = [
   {
     prompt: 'Taking risks makes life more fun.',
     labels: likertScale,
+    required: true,
   },
   {
     prompt: "My friends would say that I'm a risk-taker.",
     labels: likertScale,
+    required: true,
   },
   {
     prompt: 'I enjoy taking risks in most aspects of my life.',
     labels: likertScale,
+    required: true,
   },
   {
     prompt: 'I would take a risk even if it meant I might get hurt.',
     labels: likertScale,
+    required: true,
   },
   {
     prompt: 'Taking risks is an important part of my life.',
     labels: likertScale,
+    required: true,
   },
   {
     prompt: 'I commonly make risky decisions.',
     labels: likertScale,
+    required: true,
   },
   {
     prompt: 'I am a believer of taking chances.',
     labels: likertScale,
+    required: true,
   },
   {
     prompt: 'I am attracted, rather than scared, by risk.',
     labels: likertScale,
+    required: true,
   },
 ];
 

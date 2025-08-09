@@ -61,94 +61,114 @@ var surveyQuestions = [
   {
     prompt: 'I am good at "sizing up" situations.',
     labels: likertScale,
+    required: true,
   },
   {
     prompt:
       'I have a hard time making decisions when faced with difficult situations.',
     labels: likertScale,
+    required: true,
   },
   {
     prompt: 'I consider multiple options before making a decision.',
     labels: likertScale,
+    required: true,
   },
   {
     prompt:
       'When I encounter difficult situations, I feel like I am losing control.',
     labels: likertScale,
+    required: true,
   },
   {
     prompt:
       'I like to look at difficult situations from many different angles.',
     labels: likertScale,
+    required: true,
   },
   {
     prompt:
       'I seek additional information not immediately available before attributing causes to behavior.',
     labels: likertScale,
+    required: true,
   },
   {
     prompt:
       'When encountering difficult situations, I become so stressed that I can not think of a way to resolve the situation.',
     labels: likertScale,
+    required: true,
   },
   {
     prompt: "I try to think about things from another person's point of view.",
     labels: likertScale,
+    required: true,
   },
   {
     prompt:
       'I find it troublesome that there are so many different ways to deal with difficult situations.',
     labels: likertScale,
+    required: true,
   },
   {
     prompt: "I am good at putting myself in others' shoes.",
     labels: likertScale,
+    required: true,
   },
   {
     prompt:
       "When I encounter difficult situations, I just don't know what to do.",
     labels: likertScale,
+    required: true,
   },
   {
     prompt: 'It is important to look at difficult situations from many angles.',
     labels: likertScale,
+    required: true,
   },
   {
     prompt:
       'When in difficult situations, I consider multiple options before deciding how to behave.',
     labels: likertScale,
+    required: true,
   },
   {
     prompt: 'I often look at a situation from different viewpoints.',
     labels: likertScale,
+    required: true,
   },
   {
     prompt: 'I am capable of overcoming the difficulties in life that I face.',
     labels: likertScale,
+    required: true,
   },
   {
     prompt:
       'I consider all the available facts and information when attributing causes to behavior.',
     labels: likertScale,
+    required: true,
   },
   {
     prompt: 'I feel I have no power to change things in difficult situations.',
     labels: likertScale,
+    required: true,
   },
   {
     prompt:
       'When I encounter difficult situations, I stop and try to think of several ways to resolve it.',
     labels: likertScale,
+    required: true,
   },
   {
     prompt:
       "I can think of more than one way to resolve a difficult situation I'm confronted with.",
     labels: likertScale,
+    required: true,
   },
   {
     prompt:
       'I consider multiple options before responding to difficult situations.',
     labels: likertScale,
+    required: true,
   },
 ];
 

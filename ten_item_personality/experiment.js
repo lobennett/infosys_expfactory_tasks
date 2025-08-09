@@ -61,42 +61,52 @@ var surveyQuestions = [
   {
     prompt: 'Extraverted, enthusiastic.',
     labels: likertScale,
+    required: true,
   },
   {
     prompt: 'Critical, quarrelsome.',
     labels: likertScale,
+    required: true,
   },
   {
     prompt: 'Dependable, self-disciplined.',
     labels: likertScale,
+    required: true,
   },
   {
     prompt: 'Anxious, easily upset.',
     labels: likertScale,
+    required: true,
   },
   {
     prompt: 'Open to new experiences, complex.',
     labels: likertScale,
+    required: true,
   },
   {
     prompt: 'Reserved, quiet.',
     labels: likertScale,
+    required: true,
   },
   {
     prompt: 'Sympathetic, warm.',
     labels: likertScale,
+    required: true,
   },
   {
     prompt: 'Disorganized, careless.',
     labels: likertScale,
+    required: true,
   },
   {
     prompt: 'Calm, emotionally stable.',
     labels: likertScale,
+    required: true,
   },
   {
     prompt: 'Conventional, uncreative.',
     labels: likertScale,
+    required: true,
   },
 ];
 

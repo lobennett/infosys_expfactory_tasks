@@ -24,8 +24,6 @@ const mapResponsesToQuestions = (data, surveyQuestions, likertScale) => {
   });
 };
 
-var instructTimeThresh = 2; // threshold for instructions, in seconds
-var sumInstructTime = 0; // time spent on instructions, in seconds
 var feedbackInstructText = `
   <p class="center-block-text">
     Welcome! This experiment will take around 5 minutes.
@@ -35,16 +33,6 @@ var feedbackInstructText = `
   </p>
   <p class="center-block-text"> Press <i>enter</i> to begin.</p>
 `;
-
-var pageInstruct = [
-  `
-  <div class="centerbox">
-    <p class="center-block-text">
-      In this survey you will be responding to a number of personality traits that may or may not apply to you. Please indicate the extent to which you agree or disagree with each statement. You should rate the extent to which the pair of traits applies to you, even if one characteristic applies more strongly than the other. The survey begins on the next page.
-    </p>
-  </div>
-  `,
-];
 
 var testTrials = [];
 var likertScale = [
@@ -113,7 +101,7 @@ var surveyQuestions = [
 var trial = {
   type: jsPsychSurveyLikert,
   preamble:
-    '<div style="text-align: center; margin-top: 100px;"><b>I see myself as...</b></div>',
+    '<div style="text-align: center; margin-top: 100px;">Here are a number of personality traits that may or may not apply to you. Please indicate the extent to which you agree or disagree with each statement. You should rate the extent to which the pair of traits applies to you, even if one characteristic applies more strongly than the other.<br><br>I see myself as...</div>',
   questions: surveyQuestions,
   on_finish: function (data) {
     data.likert_scale = likertScale;
@@ -121,36 +109,6 @@ var trial = {
   },
 };
 testTrials.push(trial);
-
-var instructionTimeout;
-
-// Show the one instruction page, allow clicking or timeout
-var instructionsBlock = {
-  type: jsPsychInstructions,
-  pages: pageInstruct,
-  allow_keys: false,
-  show_clickable_nav: true,
-  data: {
-    trial_id: 'instructions',
-    stimulus: pageInstruct,
-  },
-  allow_backward: false,
-  on_load: function () {
-    instructionTimeout = setTimeout(() => {
-      console.log('Instructions timed out. Advancing automatically.');
-      jsPsych.finishTrial(); // auto-advance after 60 seconds
-    }, 60000);
-  },
-  on_finish: function (data) {
-    clearTimeout(instructionTimeout);
-
-    if (data.rt != null) {
-      sumInstructTime += data.rt;
-    } else {
-      sumInstructTime += 60000;
-    }
-  },
-};
 
 var feedbackInstructBlock = {
   type: jsPsychHtmlKeyboardResponse,
@@ -167,29 +125,6 @@ var testNode = {
   timeline: testTrials,
   loop_function: function (data) {
     return false;
-  },
-};
-
-// Node that loops if too fast
-var instructionNode = {
-  timeline: [feedbackInstructBlock, instructionsBlock],
-  loop_function: function (data) {
-    sumInstructTime = 0;
-    const trials = data.filter({ trial_id: 'instructions' }).trials;
-    for (let i = 0; i < trials.length; i++) {
-      sumInstructTime += trials[i].rt != null ? trials[i].rt : 60000;
-    }
-
-    if (sumInstructTime <= instructTimeThresh * 1000) {
-      feedbackInstructText = `
-        <p class=block-text>Read through instructions too quickly. Please take your time and make sure you understand the instructions.</p>
-        <p class=block-text>Press <i>enter</i> to continue.</p>`;
-      return true; // repeat
-    } else {
-      feedbackInstructText = `
-        <p class=block-text>Done with instructions. Press <i>enter</i> to continue.</p>`;
-      return false; // continue
-    }
   },
 };
 
@@ -222,7 +157,7 @@ var endBlock = {
 ten_item_personality_experiment = [];
 var ten_item_personality_init = () => {
   ten_item_personality_experiment.push(fullscreen);
-  ten_item_personality_experiment.push(instructionNode);
+  ten_item_personality_experiment.push(feedbackInstructBlock);
   ten_item_personality_experiment.push(testNode);
   ten_item_personality_experiment.push(endBlock);
   ten_item_personality_experiment.push(exitFullscreen);

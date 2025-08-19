@@ -6,7 +6,7 @@ The Cognitive Flexibility Inventory (CFI) is a psychological instrument that mea
 
 ## Task Description
 
-Participants respond to 16 statements on a 7-point Likert scale ranging from "Strongly Disagree" to "Strongly Agree". The inventory assesses ability to:
+Participants respond to 20 statements on a 7-point Likert scale ranging from "Strongly Disagree" to "Strongly Agree". The inventory assesses ability to:
 
 - Analyze situations and identify requirements
 - Make decisions under difficult circumstances
@@ -23,7 +23,7 @@ See [CFI example output](../assets/data_examples/cfi_example.json) for a complet
 ### Key Variables
 
 - **response**: Object containing participant responses (Q0-Q15)
-- **question_order**: Array showing randomization order of questions
+- **question_order**: Array of question order
 - **likert_scale**: 7-point scale labels used
 - **rt**: Response time in milliseconds
 - **trial_id**: Identifies survey trial type

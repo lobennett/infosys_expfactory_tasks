@@ -25,7 +25,7 @@ See [TIPI example output](../assets/data_examples/ten_item_personality_example.j
 ### Key Variables
 
 - **response**: Object containing participant responses (Q0-Q9)
-- **question_order**: Array showing randomization order of questions
+- **question_order**: Array of question order
 - **likert_scale**: 7-point scale labels used
 - **rt**: Response time in milliseconds
 - **trial_id**: Identifies survey trial type

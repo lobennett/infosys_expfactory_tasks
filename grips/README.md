@@ -22,7 +22,7 @@ See [GRIPS example output](../assets/data_examples/grips_example.json) for a com
 ### Key Variables
 
 - **response**: Object containing participant responses (Q0-Q7)
-- **question_order**: Array showing randomization order of questions
+- **question_order**: Array of question order
 - **likert_scale**: 5-point scale labels used
 - **rt**: Response time in milliseconds
 - **trial_id**: Identifies survey trial type
